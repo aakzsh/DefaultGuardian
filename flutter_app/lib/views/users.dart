@@ -1,6 +1,6 @@
 import 'package:default_guardian/constants/palette.dart';
 import 'package:default_guardian/views/new_transaction.dart';
-import 'package:default_guardian/widgets/UserTile.dart';
+import 'package:default_guardian/widgets/user_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,50 +17,77 @@ class _UsersState extends State<Users> {
     return Scaffold(
       backgroundColor: ColorPalette.bg,
       body: SafeArea(
-        child: Container(
+        child: SizedBox(
           width: double.maxFinite,
           child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "DEFAULT GUARDIAN",
-                        style: GoogleFonts.kanit(
-                            color: ColorPalette.blue,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 30,
-                            height: 0.9),
-                      ),
-                      Image.asset(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Hero(
+                        tag: "texthero",
+                        child: SizedBox(
+                          child: Text(
+                            "DEFAULT GUARDIAN",
+                            style: GoogleFonts.kanit(
+                              color: ColorPalette.blue,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 30,
+                              height: 0.9,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                        )),
+                    Hero(
+                      tag: "logohero",
+                      child: Image.asset(
                         "assets/logo.png",
                         width: 40,
                       ),
-                    ],
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                const Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "Users",
+                    style: TextStyle(color: Colors.white70, fontSize: 25),
                   ),
-                  SizedBox(height: 30,),
-                  Align(alignment: Alignment.topLeft, child: Text("Users", style: TextStyle(color: Colors.white70, fontSize: 25),),),
-                 Expanded(child: ListView.builder(
-  itemCount: 10,
-  itemBuilder: (BuildContext context, int index) {
-    return UserTile();
-  },
-)),
-                    MaterialButton(
+                ),
+                Expanded(
+                    child: ListView.builder(
+                  itemCount: 10,
+                  itemBuilder: (BuildContext context, int index) {
+                    return const UserTile();
+                  },
+                )),
+                Hero(
+                  tag: "buttonhero",
+                  child: MaterialButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const NewTransaction()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const NewTransaction()));
                     },
-                    
                     color: ColorPalette.blue,
                     minWidth: MediaQuery.of(context).size.width - 40,
                     height: 60,
-                    child:const Text("INITIATE TRANSACTION", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
+                    child: const Text(
+                      "INITIATE TRANSACTION",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    ),
                   ),
-                ],
-              ),
+                )
+              ],
             ),
+          ),
         ),
       ),
     );

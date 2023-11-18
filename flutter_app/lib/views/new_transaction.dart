@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:default_guardian/constants/palette.dart';
 import 'package:default_guardian/views/compatiblity.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +18,7 @@ class _NewTransactionState extends State<NewTransaction> {
     return Scaffold(
       backgroundColor: ColorPalette.bg,
       body: SafeArea(
-        child: Container(
+        child: SizedBox(
           width: double.maxFinite,
           child: SingleChildScrollView(
             child: Padding(
@@ -40,40 +42,90 @@ class _NewTransactionState extends State<NewTransaction> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Align(
+                  const Align(
                     alignment: Alignment.topLeft,
                     child: Text(
                       "From",
                       style: TextStyle(color: Colors.white70, fontSize: 20),
                     ),
                   ),
-                  SizedBox(
+                  DropdownButton<String>(
+                    focusColor: ColorPalette.secbg,
+                    dropdownColor: ColorPalette.secbg,
+                    isExpanded: true,
+                    items: <String>['A', 'B', 'C', 'D'].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (_) {},
+                  ),
+                  const SizedBox(
                     height: 30,
                   ),
-                  Align(
+                  const Align(
                     alignment: Alignment.topLeft,
                     child: Text(
                       "To",
                       style: TextStyle(color: Colors.white70, fontSize: 20),
                     ),
                   ),
-                  SizedBox(
+                  DropdownButton<String>(
+                    focusColor: ColorPalette.secbg,
+                    dropdownColor: ColorPalette.secbg,
+                    isExpanded: true,
+                    items: <String>['A', 'B', 'C', 'D'].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (_) {},
+                  ),
+                  const SizedBox(
                     height: 30,
                   ),
-                  Align(
+                  const Align(
                     alignment: Alignment.topLeft,
                     child: Text(
                       "Amount",
                       style: TextStyle(color: Colors.white70, fontSize: 20),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: ColorPalette.secbg,
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: TextField(
+                        style: TextStyle(color: Colors.white),
+                        textAlign: TextAlign.start,
+                        decoration: InputDecoration(
+                            hintText: 'Enter Amount in INR',
+                            border: InputBorder.none,
+                            hintStyle:
+                                TextStyle(color: Colors.white60, fontSize: 15)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
                     height: 30,
                   ),
-                  Align(
+                  const Align(
                     alignment: Alignment.topLeft,
                     child: Text(
                       "Set Weight of Scores",
@@ -81,9 +133,68 @@ class _NewTransactionState extends State<NewTransaction> {
                     ),
                   ),
                   SizedBox(
+                    width: double.infinity,
+                    child: Slider(
+                      value: 20,
+                      max: 100,
+                      activeColor: ColorPalette.sliderclr,
+                      inactiveColor: ColorPalette.sliderclr,
+                      thumbColor: ColorPalette.blue,
+                      divisions: 100,
+                      onChanged: (double value) {
+                        setState(() {
+                          // _currentSliderValue = value;
+                        });
+                      },
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        width: min(
+                            200, MediaQuery.of(context).size.width / 2 - 40),
+                        height: 60,
+                        color: const Color.fromRGBO(28, 29, 29, 1),
+                        child: const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Transaction Score",
+                              style: TextStyle(color: Colors.white70),
+                            ),
+                            Text(
+                              "65%",
+                              style: TextStyle(color: Colors.white),
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: min(
+                            200, MediaQuery.of(context).size.width / 2 - 40),
+                        height: 60,
+                        color: const Color.fromRGBO(28, 29, 29, 1),
+                        child: const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "ZK Proof Score",
+                              style: TextStyle(color: Colors.white70),
+                            ),
+                            Text(
+                              "65%",
+                              style: TextStyle(color: Colors.white),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
                     height: 30,
                   ),
-                  Align(
+                  const Align(
                     alignment: Alignment.topLeft,
                     child: Text(
                       "Set Threshold of Overall Score",
@@ -91,6 +202,40 @@ class _NewTransactionState extends State<NewTransaction> {
                     ),
                   ),
                   SizedBox(
+                    width: double.infinity,
+                    child: Slider(
+                      value: 20,
+                      max: 100,
+                      activeColor: ColorPalette.sliderclr,
+                      inactiveColor: ColorPalette.sliderclr,
+                      thumbColor: ColorPalette.blue,
+                      divisions: 100,
+                      onChanged: (double value) {
+                        setState(() {
+                          // _currentSliderValue = value;
+                        });
+                      },
+                    ),
+                  ),
+                  Container(
+                    width: min(200, MediaQuery.of(context).size.width / 2 - 40),
+                    height: 60,
+                    color: const Color.fromRGBO(28, 29, 29, 1),
+                    child: const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Threshold set by you",
+                          style: TextStyle(color: Colors.white70),
+                        ),
+                        Text(
+                          "65",
+                          style: TextStyle(color: Colors.white),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
                     height: 30,
                   ),
                   MaterialButton(

@@ -1,9 +1,5 @@
 import 'package:default_guardian/constants/palette.dart';
 import 'package:default_guardian/views/Welcome.dart';
-import 'package:default_guardian/views/compatiblity.dart';
-import 'package:default_guardian/views/new_transaction.dart';
-import 'package:default_guardian/views/single_user.dart';
-import 'package:default_guardian/views/users.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -20,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'DefaultGuardian',
       theme: _buildTheme(),
       darkTheme: _buildTheme(),
-      home: const NewTransaction(),
+      home: const WelcomeScreen(),
     );
   }
 }
@@ -32,7 +28,6 @@ ThemeData _buildTheme() {
   );
 
   return baseTheme.copyWith(
-    textTheme: GoogleFonts.poppinsTextTheme(baseTheme.textTheme),
-     brightness: Brightness.dark
-  );
+      textTheme: GoogleFonts.poppinsTextTheme(baseTheme.textTheme),
+      brightness: Brightness.dark);
 }

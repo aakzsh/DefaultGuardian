@@ -1,4 +1,5 @@
 import 'package:default_guardian/constants/palette.dart';
+import 'package:default_guardian/constants/router.dart';
 import 'package:default_guardian/views/single_user.dart';
 import 'package:flutter/material.dart';
 
@@ -41,8 +42,8 @@ class UserTile extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const SingleUser()));
+              Navigator.push(
+                  context, MyRoute(builder: (context) => const SingleUser()));
             },
             child: Container(
                 height: double.maxFinite,

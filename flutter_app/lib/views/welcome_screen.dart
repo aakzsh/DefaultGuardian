@@ -1,4 +1,5 @@
 import 'package:default_guardian/constants/palette.dart';
+import 'package:default_guardian/constants/router.dart';
 import 'package:default_guardian/views/users.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -93,11 +94,4 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       ),
     );
   }
-}
-
-class MyRoute extends MaterialPageRoute {
-  MyRoute({required WidgetBuilder builder}) : super(builder: builder);
-
-  @override
-  Duration get transitionDuration => const Duration(milliseconds: 800);
 }

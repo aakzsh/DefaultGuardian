@@ -1,4 +1,5 @@
 import 'package:default_guardian/constants/palette.dart';
+import 'package:default_guardian/constants/router.dart';
 import 'package:default_guardian/views/new_transaction.dart';
 import 'package:default_guardian/widgets/transaction_tile.dart';
 import 'package:flutter/material.dart';
@@ -47,19 +48,23 @@ class _SingleUserState extends State<SingleUser> {
                 const SizedBox(
                   height: 20,
                 ),
-                MaterialButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const NewTransaction()));
-                  },
-                  color: ColorPalette.blue,
-                  minWidth: MediaQuery.of(context).size.width - 40,
-                  height: 60,
-                  child: const Text(
-                    "CALCULATE TRANSACTION SCORE",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                Hero(
+                  tag: "buttonhero",
+                  child: MaterialButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MyRoute(
+                              builder: (context) => const NewTransaction()));
+                    },
+                    color: ColorPalette.blue,
+                    minWidth: MediaQuery.of(context).size.width - 40,
+                    height: 60,
+                    child: const Text(
+                      "CALCULATE TRANSACTION SCORE",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -76,11 +81,17 @@ class _SingleUserState extends State<SingleUser> {
                 const SizedBox(
                   height: 30,
                 ),
-                const Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "Past Transactions",
-                    style: TextStyle(color: Colors.white70, fontSize: 25),
+                const Hero(
+                  tag: "titletexthero",
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "Past Transactions",
+                      style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 25,
+                          decoration: TextDecoration.none),
+                    ),
                   ),
                 ),
                 const SizedBox(

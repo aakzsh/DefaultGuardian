@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:default_guardian/constants/palette.dart';
+import 'package:default_guardian/constants/router.dart';
+import 'package:default_guardian/views/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gauge_indicator/gauge_indicator.dart';
@@ -318,6 +320,29 @@ class _CompatibilityState extends State<Compatibility> {
                               style: TextStyle(color: Colors.white70),
                             )
                           ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Hero(
+                      tag: "buttonhero",
+                      child: MaterialButton(
+                        onPressed: () {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MyRoute(
+                                  builder: (context) => const WelcomeScreen()),
+                              (route) => false);
+                        },
+                        color: ColorPalette.blue,
+                        minWidth: MediaQuery.of(context).size.width - 40,
+                        height: 60,
+                        child: const Text(
+                          "GO TO HOME",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w600),
                         ),
                       ),
                     )

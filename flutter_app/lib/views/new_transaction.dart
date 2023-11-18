@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:default_guardian/constants/palette.dart';
+import 'package:default_guardian/constants/router.dart';
 import 'package:default_guardian/views/compatiblity.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -90,7 +91,7 @@ class _NewTransactionState extends State<NewTransaction> {
                         ),
                       );
                     }).toList(),
-                    onChanged: (_) {},
+                    onChanged: (value) {},
                   ),
                   const SizedBox(
                     height: 30,
@@ -240,10 +241,8 @@ class _NewTransactionState extends State<NewTransaction> {
                   ),
                   MaterialButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Compatibility()));
+                      Navigator.push(context,
+                          MyRoute(builder: (context) => const Compatibility()));
                     },
                     color: ColorPalette.blue,
                     minWidth: MediaQuery.of(context).size.width - 40,

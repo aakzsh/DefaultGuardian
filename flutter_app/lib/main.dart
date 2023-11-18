@@ -1,5 +1,5 @@
 import 'package:default_guardian/constants/palette.dart';
-import 'package:default_guardian/views/Welcome.dart';
+import 'package:default_guardian/views/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

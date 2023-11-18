@@ -1,4 +1,5 @@
 import 'package:default_guardian/constants/palette.dart';
+import 'package:default_guardian/constants/router.dart';
 import 'package:default_guardian/views/new_transaction.dart';
 import 'package:default_guardian/widgets/user_tile.dart';
 import 'package:flutter/material.dart';
@@ -52,11 +53,17 @@ class _UsersState extends State<Users> {
                 const SizedBox(
                   height: 30,
                 ),
-                const Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "Users",
-                    style: TextStyle(color: Colors.white70, fontSize: 25),
+                const Hero(
+                  tag: "titletexthero",
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "Users",
+                      style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 25,
+                          decoration: TextDecoration.none),
+                    ),
                   ),
                 ),
                 Expanded(
@@ -72,7 +79,7 @@ class _UsersState extends State<Users> {
                     onPressed: () {
                       Navigator.push(
                           context,
-                          MaterialPageRoute(
+                          MyRoute(
                               builder: (context) => const NewTransaction()));
                     },
                     color: ColorPalette.blue,

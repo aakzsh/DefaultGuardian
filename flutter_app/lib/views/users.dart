@@ -1,3 +1,4 @@
+import 'package:default_guardian/constants/accounts.dart';
 import 'package:default_guardian/constants/palette.dart';
 import 'package:default_guardian/constants/router.dart';
 import 'package:default_guardian/views/new_transaction.dart';
@@ -68,9 +69,11 @@ class _UsersState extends State<Users> {
                 ),
                 Expanded(
                     child: ListView.builder(
-                  itemCount: 10,
+                  itemCount: Accounts.accountList.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return const UserTile();
+                    return UserTile(
+                      accountno: Accounts.accountList[index],
+                    );
                   },
                 )),
                 Hero(

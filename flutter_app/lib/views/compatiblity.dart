@@ -8,13 +8,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:gauge_indicator/gauge_indicator.dart';
 
 class Compatibility extends StatefulWidget {
-  const Compatibility({super.key});
+  Compatibility({super.key, required this.data});
+  var data;
 
   @override
   State<Compatibility> createState() => _CompatibilityState();
 }
 
 class _CompatibilityState extends State<Compatibility> {
+  @override
+  void initState() {
+    // log(widget.data);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,12 +93,12 @@ class _CompatibilityState extends State<Compatibility> {
                                       MediaQuery.of(context).size.width / 2 -
                                           60,
                                       180),
-                                  child: const AnimatedRadialGauge(
-                                      duration: Duration(seconds: 1),
-                                      curve: Curves.elasticOut,
+                                  child: AnimatedRadialGauge(
+                                      duration: const Duration(seconds: 3),
+                                      curve: Curves.easeIn,
                                       radius: 100,
-                                      value: 23,
-                                      axis: GaugeAxis(
+                                      value: widget.data["tscore"] * 1.0,
+                                      axis: const GaugeAxis(
                                         min: 0,
                                         max: 100,
                                         degrees: 180,
@@ -121,9 +128,9 @@ class _CompatibilityState extends State<Compatibility> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Text(
-                                  "23",
-                                  style: TextStyle(
+                                Text(
+                                  widget.data["tscore"].toString(),
+                                  style: const TextStyle(
                                       fontSize: 25, color: Colors.white),
                                 ),
                                 const SizedBox(
@@ -151,12 +158,12 @@ class _CompatibilityState extends State<Compatibility> {
                                       MediaQuery.of(context).size.width / 2 -
                                           60,
                                       180),
-                                  child: const AnimatedRadialGauge(
-                                      duration: Duration(seconds: 1),
-                                      curve: Curves.elasticOut,
+                                  child: AnimatedRadialGauge(
+                                      duration: const Duration(seconds: 3),
+                                      curve: Curves.easeIn,
                                       radius: 100,
-                                      value: 23,
-                                      axis: GaugeAxis(
+                                      value: widget.data["zkscore"] * 1.0,
+                                      axis: const GaugeAxis(
                                         min: 0,
                                         max: 100,
                                         degrees: 180,
@@ -186,9 +193,9 @@ class _CompatibilityState extends State<Compatibility> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Text(
-                                  "23",
-                                  style: TextStyle(
+                                Text(
+                                  widget.data["zkscore"].toString(),
+                                  style: const TextStyle(
                                       fontSize: 25, color: Colors.white),
                                 ),
                                 const SizedBox(
@@ -237,12 +244,12 @@ class _CompatibilityState extends State<Compatibility> {
                                 width: min(
                                     MediaQuery.of(context).size.width - 100,
                                     400),
-                                child: const AnimatedRadialGauge(
-                                    duration: Duration(seconds: 1),
-                                    curve: Curves.elasticOut,
+                                child: AnimatedRadialGauge(
+                                    duration: const Duration(seconds: 3),
+                                    curve: Curves.easeIn,
                                     radius: 100,
-                                    value: 23,
-                                    axis: GaugeAxis(
+                                    value: widget.data["overallscore"] * 1.0,
+                                    axis: const GaugeAxis(
                                       min: 0,
                                       max: 100,
                                       degrees: 180,
@@ -272,9 +279,9 @@ class _CompatibilityState extends State<Compatibility> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              const Text(
-                                "23",
-                                style: TextStyle(
+                              Text(
+                                widget.data["overallscore"].toString(),
+                                style: const TextStyle(
                                     fontSize: 25, color: Colors.white),
                               )
                             ],
@@ -283,9 +290,10 @@ class _CompatibilityState extends State<Compatibility> {
                     const SizedBox(
                       height: 20,
                     ),
-                    const Text(
-                      "Threshold Score: 63",
-                      style: TextStyle(fontSize: 20, color: Colors.white70),
+                    Text(
+                      "Threshold Score: ${widget.data["threshold"].toString()}",
+                      style:
+                          const TextStyle(fontSize: 20, color: Colors.white70),
                     ),
                     const SizedBox(
                       height: 20,
@@ -298,28 +306,49 @@ class _CompatibilityState extends State<Compatibility> {
                       width: double.maxFinite,
                       // height: ,
 
-                      child: const Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Result:",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            Text(
-                              "SUCCESS",
-                              style: TextStyle(
-                                  color: Colors.greenAccent,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 30),
-                            ),
-                            Text(
-                              "User passed the required score for the transaction to initiate successfully. Currently, the risk factor is 33%, which means there is a predicted chance of 33% that the transaction would fail, whereas the threshold allows 37% of risk! ",
-                              style: TextStyle(color: Colors.white70),
-                            )
-                          ],
+                          children: widget.data["overallscore"] >
+                                  widget.data["threshold"]
+                              ? [
+                                  const Text(
+                                    "Result:",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  const Text(
+                                    "SUCCESS",
+                                    style: TextStyle(
+                                        color: Colors.greenAccent,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 30),
+                                  ),
+                                  Text(
+                                    "User passed the required score for the transaction to initiate successfully. Currently, the risk factor is ${100 - widget.data["overallscore"]}%, which means there is a predicted chance of ${100 - widget.data["overallscore"]}% that the transaction would fail, whereas the threshold allows ${100 - widget.data["threshold"]}% of risk! ",
+                                    style:
+                                        const TextStyle(color: Colors.white70),
+                                  )
+                                ]
+                              : [
+                                  const Text(
+                                    "Result:",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  const Text(
+                                    "FAILURE",
+                                    style: TextStyle(
+                                        color: Colors.redAccent,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 30),
+                                  ),
+                                  Text(
+                                    "User couldn't pass the required score for the transaction to initiate successfully. Currently, the risk factor is ${100 - widget.data["overallscore"]}%, which means there is a predicted chance of ${100 - widget.data["overallscore"]}% that the transaction would fail, whereas the threshold allows only ${100 - widget.data["threshold"]}% of risk! ",
+                                    style:
+                                        const TextStyle(color: Colors.white70),
+                                  )
+                                ],
                         ),
                       ),
                     ),

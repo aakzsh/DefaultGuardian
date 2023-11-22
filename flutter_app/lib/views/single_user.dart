@@ -1,20 +1,26 @@
+import 'package:default_guardian/constants/accounts.dart';
 import 'package:default_guardian/constants/palette.dart';
-import 'package:default_guardian/constants/router.dart';
-import 'package:default_guardian/views/new_transaction.dart';
+import 'package:default_guardian/constants/user_transactions.dart';
+import 'package:default_guardian/services/transaction_score/t_score.dart';
 import 'package:default_guardian/widgets/transaction_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SingleUser extends StatefulWidget {
-  const SingleUser({super.key});
+  const SingleUser({super.key, required this.accountno});
+  final String accountno;
 
   @override
   State<SingleUser> createState() => _SingleUserState();
 }
 
 class _SingleUserState extends State<SingleUser> {
+  bool calculated = false;
+  bool loadingScore = true;
+  int tscore = 0;
   @override
   Widget build(BuildContext context) {
+    // print(UserTransactions.txns[int.parse(accountno)]?.length);
     return Scaffold(
       backgroundColor: ColorPalette.bg,
       body: SafeArea(
@@ -30,7 +36,7 @@ class _SingleUserState extends State<SingleUser> {
                     Hero(
                       tag: "usernamehero",
                       child: Text(
-                        "John Doe",
+                        Accounts.accountNameMapping[widget.accountno]!,
                         style: GoogleFonts.kanit(
                             color: ColorPalette.blue,
                             fontWeight: FontWeight.w600,
@@ -51,11 +57,16 @@ class _SingleUserState extends State<SingleUser> {
                 Hero(
                   tag: "buttonhero",
                   child: MaterialButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MyRoute(
-                              builder: (context) => const NewTransaction()));
+                    onPressed: () async {
+                      setState(() {
+                        calculated = true;
+                        loadingScore = true;
+                      });
+                      final int score = await TxnScore().calculateScore();
+                      setState(() {
+                        tscore = score;
+                        loadingScore = false;
+                      });
                     },
                     color: ColorPalette.blue,
                     minWidth: MediaQuery.of(context).size.width - 40,
@@ -78,6 +89,20 @@ class _SingleUserState extends State<SingleUser> {
                     style: TextStyle(color: Colors.white70),
                   )),
                 ),
+                calculated
+                    ? (loadingScore
+                        ? const SizedBox(
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          )
+                        : Text(
+                            "The Transaction Score is $tscore",
+                            style: const TextStyle(color: Colors.white),
+                          ))
+                    : const SizedBox(
+                        height: 0,
+                      ),
                 const SizedBox(
                   height: 30,
                 ),
@@ -86,7 +111,7 @@ class _SingleUserState extends State<SingleUser> {
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "Past Transactions",
+                      "Recent Transactions",
                       style: TextStyle(
                           color: Colors.white70,
                           fontSize: 25,
@@ -107,9 +132,12 @@ class _SingleUserState extends State<SingleUser> {
                 ),
                 Expanded(
                     child: ListView.builder(
-                  itemCount: 10,
+                  itemCount: UserTransactions
+                      .txns[int.parse(widget.accountno)]?.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return const TransactionTile();
+                    return TransactionTile(
+                        data: UserTransactions.txns[int.parse(widget.accountno)]
+                            ?[index]);
                   },
                 )),
               ],

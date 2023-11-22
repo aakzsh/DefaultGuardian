@@ -1,11 +1,12 @@
+import 'package:default_guardian/constants/accounts.dart';
 import 'package:default_guardian/constants/palette.dart';
 import 'package:default_guardian/constants/router.dart';
 import 'package:default_guardian/views/single_user.dart';
 import 'package:flutter/material.dart';
 
 class UserTile extends StatelessWidget {
-  const UserTile({super.key});
-
+  const UserTile({super.key, required this.accountno});
+  final String accountno;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -18,8 +19,8 @@ class UserTile extends StatelessWidget {
         ),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          const Padding(
-            padding: EdgeInsets.fromLTRB(20, 5, 0, 5),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 5, 0, 5),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,14 +29,14 @@ class UserTile extends StatelessWidget {
                 // tag: "usernamehero",
                 // child:
                 Text(
-                  "John Doe",
-                  style: TextStyle(
+                  Accounts.accountNameMapping[accountno]!,
+                  style: const TextStyle(
                       color: Colors.white, decoration: TextDecoration.none),
                 ),
                 // ),
                 Text(
-                  "Acc No. 1234567890",
-                  style: TextStyle(color: Colors.white70, fontSize: 12),
+                  "Acc No. $accountno",
+                  style: const TextStyle(color: Colors.white70, fontSize: 12),
                 ),
               ],
             ),
@@ -43,7 +44,11 @@ class UserTile extends StatelessWidget {
           InkWell(
             onTap: () {
               Navigator.push(
-                  context, MyRoute(builder: (context) => const SingleUser()));
+                  context,
+                  MyRoute(
+                      builder: (context) => SingleUser(
+                            accountno: accountno,
+                          )));
             },
             child: Container(
                 height: double.maxFinite,

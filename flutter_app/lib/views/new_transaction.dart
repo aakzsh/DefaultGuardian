@@ -5,6 +5,7 @@ import 'package:default_guardian/constants/router.dart';
 import 'package:default_guardian/constants/accounts.dart';
 import 'package:default_guardian/constants/user_stats.dart';
 import 'package:default_guardian/services/transaction_score/t_score.dart';
+import 'package:default_guardian/services/url_opener/url_opener.dart';
 import 'package:default_guardian/services/zero_knowledge_score/zk_score.dart';
 import 'package:default_guardian/views/compatiblity.dart';
 import 'package:flutter/material.dart';
@@ -174,13 +175,17 @@ class _NewTransactionState extends State<NewTransaction> {
                                 TextStyle(color: Colors.white70, fontSize: 20),
                           ),
                         ),
-                        const Align(
+                        Align(
                           alignment: Alignment.topLeft,
                           child: InkWell(
-                              child: Text(
-                            "how are these scores calculated?",
-                            style: TextStyle(color: Colors.white70),
-                          )),
+                              onTap: () async {
+                                await UrlOpener.launch(
+                                    "https://github.com/aakzsh/DefaultGuardian/blob/master/TERMS.md");
+                              },
+                              child: const Text(
+                                "how are these scores calculated?",
+                                style: TextStyle(color: Colors.white70),
+                              )),
                         ),
                         SizedBox(
                           width: double.infinity,
@@ -335,7 +340,11 @@ class _NewTransactionState extends State<NewTransaction> {
                               setState(() {
                                 loading = true;
                               });
-                              final tscore = await TxnScore().calculateScore();
+                              final tscore = await TxnScore().calculateScore({
+                                "sender": fromAcc,
+                                "receiver": toAcc,
+                                "amount": amount
+                              });
 
                               final zkscore = await ZK().encryptscore(
                                   UserStats.stats[fromAcc], amount);

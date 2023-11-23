@@ -1,7 +1,9 @@
 import 'package:default_guardian/constants/accounts.dart';
 import 'package:default_guardian/constants/palette.dart';
+import 'package:default_guardian/constants/router.dart';
 import 'package:default_guardian/constants/user_transactions.dart';
-import 'package:default_guardian/services/transaction_score/t_score.dart';
+import 'package:default_guardian/services/url_opener/url_opener.dart';
+import 'package:default_guardian/views/new_transaction.dart';
 import 'package:default_guardian/widgets/transaction_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -58,15 +60,19 @@ class _SingleUserState extends State<SingleUser> {
                   tag: "buttonhero",
                   child: MaterialButton(
                     onPressed: () async {
-                      setState(() {
-                        calculated = true;
-                        loadingScore = true;
-                      });
-                      final int score = await TxnScore().calculateScore();
-                      setState(() {
-                        tscore = score;
-                        loadingScore = false;
-                      });
+                      Navigator.push(
+                          context,
+                          MyRoute(
+                              builder: (context) => const NewTransaction()));
+                      // setState(() {
+                      //   calculated = true;
+                      //   loadingScore = true;
+                      // });
+                      // final int score = await TxnScore().calculateScore();
+                      // setState(() {
+                      //   tscore = score;
+                      //   loadingScore = false;
+                      // });
                     },
                     color: ColorPalette.blue,
                     minWidth: MediaQuery.of(context).size.width - 40,
@@ -81,13 +87,17 @@ class _SingleUserState extends State<SingleUser> {
                 const SizedBox(
                   height: 5,
                 ),
-                const Align(
+                Align(
                   alignment: Alignment.topRight,
                   child: InkWell(
-                      child: Text(
-                    "how is this score calculated?",
-                    style: TextStyle(color: Colors.white70),
-                  )),
+                      onTap: () async {
+                        await UrlOpener.launch(
+                            "https://github.com/aakzsh/DefaultGuardian/blob/master/TERMS.md");
+                      },
+                      child: const Text(
+                        "how is this score calculated?",
+                        style: TextStyle(color: Colors.white70),
+                      )),
                 ),
                 calculated
                     ? (loadingScore
@@ -122,13 +132,17 @@ class _SingleUserState extends State<SingleUser> {
                 const SizedBox(
                   height: 5,
                 ),
-                const Align(
+                Align(
                   alignment: Alignment.topLeft,
                   child: InkWell(
-                      child: Text(
-                    "where is this data coming from?",
-                    style: TextStyle(color: Colors.white70),
-                  )),
+                      onTap: () async {
+                        await UrlOpener.launch(
+                            "https://github.com/aakzsh/DefaultGuardian/blob/master/TERMS.md");
+                      },
+                      child: const Text(
+                        "where is this data coming from?",
+                        style: TextStyle(color: Colors.white70),
+                      )),
                 ),
                 Expanded(
                     child: ListView.builder(

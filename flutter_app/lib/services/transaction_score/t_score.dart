@@ -1,22 +1,24 @@
+import 'dart:convert';
+import "dart:developer";
 import 'package:http/http.dart' as http;
 
 class TxnScore {
-  Future<int> calculateScore() async {
-    // const score = 90;
-    // final res = await http.get(Uri.parse("http://127.0.0.1:5000/check"));
-    // print(res);
-    return 78;
-  }
+  Future<int> calculateScore(data) async {
+    final res = await http.get(Uri.parse(
+        "https://defaultguardian.onrender.com/calculate/${data["sender"]}/${data["receiver"]}/${data["amount"]}"));
 
-  Future<http.Response> getScorefromAPI() async {
-    final response = await http.get(Uri.parse("http://127.0.0.1:5000"));
-
-    if (response.statusCode == 200) {
-      // The request was successful
-      return response;
+    if (res.statusCode == 200) {
+      final data = jsonDecode(res.body.toString());
+      final score =
+          (double.parse(data["overall_score"].toString()) * 100).round();
+      log(data['overall_score'].toString());
+      return score;
+      // ;
     } else {
-      // The request failed
-      throw Exception('Failed to load post');
+      // Print an error message
+      log('Error: ${res.statusCode}');
     }
+
+    return 80;
   }
 }

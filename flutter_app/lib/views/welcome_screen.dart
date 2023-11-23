@@ -85,7 +85,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
                 InkWell(
                   onTap: () async {
-                    await UrlOpener.launch("https://youtube.com");
+                    await UrlOpener.launch(
+                        "https://github.com/aakzsh/DefaultGuardian/blob/master/TERMS.md");
                   },
                   child: const Text(
                     "terms and usage",

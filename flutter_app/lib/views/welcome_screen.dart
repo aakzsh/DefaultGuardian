@@ -1,8 +1,10 @@
 import 'package:default_guardian/constants/palette.dart';
 import 'package:default_guardian/constants/router.dart';
+import 'package:default_guardian/services/url_opener/url_opener.dart';
 import 'package:default_guardian/views/users.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import "dart:math";
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -69,7 +71,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           MyRoute(builder: (context) => const Users()));
                     },
                     color: ColorPalette.blue,
-                    minWidth: MediaQuery.of(context).size.width - 40,
+                    minWidth: min(MediaQuery.of(context).size.width - 40, 400),
                     height: 60,
                     child: const Text(
                       "START",
@@ -81,8 +83,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                const InkWell(
-                  child: Text(
+                InkWell(
+                  onTap: () async {
+                    await UrlOpener.launch("https://youtube.com");
+                  },
+                  child: const Text(
                     "terms and usage",
                     style: TextStyle(color: Colors.white),
                   ),

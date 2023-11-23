@@ -1,16 +1,15 @@
-# default_guardian
+# FLUTTER APP FOR DEFAULT GUARDIAN
 
-A new Flutter project.
+This directory contains the code for the flutter app for Default Guardian, which serves as the User Interface of the project. The app is currently built and tested end-to-end for two platforms:
+1. Android
+2. Web
 
-## Getting Started
+The app is also configured to work on other platforms such as iOS, Linux, macOS and Windows, but not tested yet.
 
-This project is a starting point for a Flutter application.
+## Running Locally
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Ensure that you've flutter installed and configured.
+- ```flutter pub get```
+- Select your debug device.
+- ```flutter run```
+- The app should now be up and running for the specified platform!

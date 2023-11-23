@@ -39,7 +39,9 @@ class _CompatibilityState extends State<Compatibility> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "TRANSACTION\nCOMPATIBILITY",
+                          MediaQuery.of(context).size.width > 700
+                              ? "TRANSACTION COMPATIBILITY"
+                              : "TRANSACTION\nCOMPATIBILITY",
                           style: GoogleFonts.kanit(
                               color: ColorPalette.blue,
                               fontWeight: FontWeight.w700,

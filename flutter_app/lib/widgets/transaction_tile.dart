@@ -24,7 +24,7 @@ class TransactionTile extends StatelessWidget {
               children: [
                 Text(
                   data["txn_name"].toString().length > 25
-                      ? data["txn_name"].toString().substring(0, 23) + "..."
+                      ? "${data["txn_name"].toString().substring(0, 23)}..."
                       : data["txn_name"].toString(),
                   style: const TextStyle(color: Colors.white),
                 ),

@@ -18,9 +18,9 @@ class NewTransaction extends StatefulWidget {
 }
 
 class _NewTransactionState extends State<NewTransaction> {
-  String to_acc = Accounts.accountList[0], from_acc = Accounts.accountList[0];
-  int tscore_weight = 50;
-  int overall_score = 60;
+  String toAcc = Accounts.accountList[0], fromAcc = Accounts.accountList[0];
+  int tscoreWeight = 50;
+  int overallScoreWeight = 60;
   double amount = 0.0;
   bool loading = false;
   @override
@@ -72,7 +72,7 @@ class _NewTransactionState extends State<NewTransaction> {
                           dropdownColor: ColorPalette.secbg,
                           isExpanded: true,
                           hint: Text(
-                            from_acc,
+                            fromAcc,
                             style: const TextStyle(color: Colors.white),
                           ),
                           items: Accounts.accountList.map((String value) {
@@ -85,9 +85,9 @@ class _NewTransactionState extends State<NewTransaction> {
                             );
                           }).toList(),
                           onChanged: (newval) {
-                            print("$newval changed");
+                            // print("$newval changed");
                             setState(() {
-                              from_acc = newval!;
+                              fromAcc = newval!;
                             });
                           },
                         ),
@@ -104,7 +104,7 @@ class _NewTransactionState extends State<NewTransaction> {
                         ),
                         DropdownButton<String>(
                           hint: Text(
-                            to_acc,
+                            toAcc,
                             style: const TextStyle(color: Colors.white),
                           ),
                           focusColor: ColorPalette.secbg,
@@ -120,9 +120,9 @@ class _NewTransactionState extends State<NewTransaction> {
                             );
                           }).toList(),
                           onChanged: (newval) {
-                            print("$newval changed");
+                            // print("$newval changed");
                             setState(() {
-                              to_acc = newval!;
+                              toAcc = newval!;
                             });
                           },
                         ),
@@ -185,7 +185,7 @@ class _NewTransactionState extends State<NewTransaction> {
                         SizedBox(
                           width: double.infinity,
                           child: Slider(
-                            value: tscore_weight.toDouble(),
+                            value: tscoreWeight.toDouble(),
                             max: 100,
                             activeColor: ColorPalette.sliderclr,
                             inactiveColor: ColorPalette.sliderclr,
@@ -193,7 +193,7 @@ class _NewTransactionState extends State<NewTransaction> {
                             divisions: 100,
                             onChanged: (double value) {
                               setState(() {
-                                tscore_weight = value.round();
+                                tscoreWeight = value.round();
                                 // tscore_weight = int.parse(value.toString());
                                 // _currentSliderValue = value;
                               });
@@ -216,7 +216,7 @@ class _NewTransactionState extends State<NewTransaction> {
                                     style: TextStyle(color: Colors.white70),
                                   ),
                                   Text(
-                                    "$tscore_weight%",
+                                    "$tscoreWeight%",
                                     style: const TextStyle(color: Colors.white),
                                   )
                                 ],
@@ -235,7 +235,7 @@ class _NewTransactionState extends State<NewTransaction> {
                                     style: TextStyle(color: Colors.white70),
                                   ),
                                   Text(
-                                    "${100 - tscore_weight}%",
+                                    "${100 - tscoreWeight}%",
                                     style: const TextStyle(color: Colors.white),
                                   )
                                 ],
@@ -257,7 +257,7 @@ class _NewTransactionState extends State<NewTransaction> {
                         SizedBox(
                           width: double.infinity,
                           child: Slider(
-                            value: overall_score.toDouble(),
+                            value: overallScoreWeight.toDouble(),
                             max: 100,
                             activeColor: ColorPalette.sliderclr,
                             inactiveColor: ColorPalette.sliderclr,
@@ -265,15 +265,15 @@ class _NewTransactionState extends State<NewTransaction> {
                             divisions: 100,
                             onChanged: (double value) {
                               setState(() {
-                                overall_score = value.round();
+                                overallScoreWeight = value.round();
                                 // _currentSliderValue = value;
                               });
                             },
                           ),
                         ),
                         Container(
-                          width: min(
-                              200, MediaQuery.of(context).size.width / 2 - 40),
+                          width:
+                              min(240, MediaQuery.of(context).size.width / 2),
                           height: 60,
                           color: const Color.fromRGBO(28, 29, 29, 1),
                           child: Column(
@@ -284,7 +284,7 @@ class _NewTransactionState extends State<NewTransaction> {
                                 style: TextStyle(color: Colors.white70),
                               ),
                               Text(
-                                overall_score.toString(),
+                                overallScoreWeight.toString(),
                                 style: const TextStyle(color: Colors.white),
                               )
                             ],
@@ -295,7 +295,7 @@ class _NewTransactionState extends State<NewTransaction> {
                         ),
                         MaterialButton(
                           onPressed: () async {
-                            Future<void> _showMyDialog() async {
+                            Future<void> showMyDialog() async {
                               return showDialog<void>(
                                 context: context,
                                 barrierDismissible:
@@ -329,38 +329,33 @@ class _NewTransactionState extends State<NewTransaction> {
                               );
                             }
 
-                            if (from_acc == to_acc) {
-                              await _showMyDialog();
+                            if (fromAcc == toAcc) {
+                              await showMyDialog();
                             } else {
                               setState(() {
                                 loading = true;
                               });
-                              final tscore1 = await TxnScore().calculateScore();
-                              final tscore2 = await TxnScore().calculateScore();
-                              final normalizedTscore =
-                                  0.5 * tscore1 + 0.5 * tscore2;
+                              final tscore = await TxnScore().calculateScore();
 
                               final zkscore = await ZK().encryptscore(
-                                  UserStats.stats[from_acc], amount);
-                              print(normalizedTscore);
-                              print(zkscore);
-                              final overallScore =
-                                  ((tscore_weight * normalizedTscore +
-                                              (100 - tscore_weight) * zkscore) /
-                                          100)
-                                      .round();
-                              print("overall score is $overallScore");
+                                  UserStats.stats[fromAcc], amount);
+                              // print(zkscore);
+                              final overallScore = ((tscoreWeight * tscore +
+                                          (100 - tscoreWeight) * zkscore) /
+                                      100)
+                                  .round();
+                              // print("overall score is $overallScore");
                               setState(() {
                                 loading = false;
                               });
 
                               final showData = {
-                                "tscore": normalizedTscore,
+                                "tscore": tscore,
                                 "zkscore": zkscore,
                                 "overallscore": overallScore,
-                                "threshold": overall_score
+                                "threshold": overallScoreWeight
                               };
-                              // if (!mounted) return;
+                              if (!mounted) return;
                               Navigator.push(
                                   context,
                                   MyRoute(

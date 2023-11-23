@@ -9,6 +9,10 @@ app = Flask(__name__)
 def index():
     return jsonify({"Choo Choo": "Welcome to your Flask app 🚅"})
 
+@app.route('/check')
+def checkk():
+    return "99"    
+
 @app.route('/calculate/<fromm>/<to>/<amount>')
 def check(fromm, to, amount):
     

@@ -7,9 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gauge_indicator/gauge_indicator.dart';
 
+// ignore: must_be_immutable
 class Compatibility extends StatefulWidget {
   Compatibility({super.key, required this.data});
-  var data;
+  dynamic data;
 
   @override
   State<Compatibility> createState() => _CompatibilityState();

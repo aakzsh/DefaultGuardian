@@ -74,7 +74,7 @@ class _SingleUserState extends State<SingleUser> {
                     child: const Text(
                       "CALCULATE TRANSACTION SCORE",
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),

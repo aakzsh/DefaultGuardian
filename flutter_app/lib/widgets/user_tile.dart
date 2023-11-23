@@ -66,7 +66,7 @@ class UserTile extends StatelessWidget {
                       child: Text(
                         "view history",
                         style:
-                            TextStyle(color: ColorPalette.blue, fontSize: 12),
+                            TextStyle(color: ColorPalette.blue, fontSize: 10),
                         textAlign: TextAlign.end,
                       )),
                 )),

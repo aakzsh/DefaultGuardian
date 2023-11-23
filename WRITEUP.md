@@ -32,3 +32,4 @@ We've currently built a solution which is efficient to demonstrate and to explai
 3. The web application is deployed on Netlify.
 4. The model training part took place on google colab.
 5. The dataset was obtained from Kaggle and modified by us accordingly
+6. The flask app containing model is deployed on the render platform. 
